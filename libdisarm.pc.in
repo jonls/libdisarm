@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=@libdir@
+includedir=${prefix}/include
+
+Name: @PACKAGE_NAME@
+Description: @PACKAGE_STRING@
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -ldisarm
+Cflags: -I${includedir}

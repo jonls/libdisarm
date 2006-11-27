@@ -1,0 +1,35 @@
+
+Disassembler Library for ARM
+
+Disassembles ARM instructions to a data structure that makes it easy to access
+instruction parameters. The library also contains functions to print
+human-readable assembly code from instructions, and alongside the library
+a small disassembly tool is provided. Tested on ARMv4 code but should support
+instructions in ARMv5 and below. Thumb instructions are currently not
+supported.
+
+Documentation:
+<http://iriver-t10.sourceforge.net/libdisarm-api.html>
+
+Code repository:
+<https://launchpad.net/libdisarm/>
+
+
+Compiling and installing:
+First, run the following command if you branched the code from
+the bzr repository:
+ $ ./bootstrap
+
+Next, use the following steps to compile libdisarm:
+ $ ./configure
+ $ make
+
+If it succeded you should be able to run dacli directly from
+the build directory like this:
+ $ ./dacli -h
+
+If you want to install (probably requires that you are root) run
+the following command:
+ $ make install
+
+Please see the web sites mentioned above for further information.

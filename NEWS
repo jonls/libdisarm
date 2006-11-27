@@ -1,0 +1,6 @@
+
+libdisarm-0.1
+-------------
+First release of libdisarm. It is pretty usable already, but expect some bugs.
+It has only really been tested on ARMv4 code, but should support instructions
+from ARMv5 and below.
