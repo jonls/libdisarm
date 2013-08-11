@@ -1,26 +1,27 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.69])
 AC_INIT([libdisarm],[0.1],[jonlst@gmail.com])
-AM_INIT_AUTOMAKE([dist-bzip2 -Wall])
-
 AC_CONFIG_SRCDIR([src/libdisarm/disarm.h])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
+AM_INIT_AUTOMAKE([foreign subdir-objects dist-xz -Wall])
+
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_SUBST(LIBDISARM_VERSION_INFO, [0:0:0])
 
 # Checks for programs.
 AC_PROG_CC
-AX_CFLAGS_GCC_OPTION([-Wswitch])
-
+AM_PROG_CC_C_O
+AM_PROG_AR
 AC_PROG_LIBTOOL
 
 # Checks for libraries.
 
 # Checks for header files.
 AC_HEADER_ASSERT
-AC_CHECK_HEADERS([stdint.h stdlib.h sys/endian.h])
+AC_CHECK_HEADERS([byteswap.h endian.h stdint.h stdlib.h sys/endian.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

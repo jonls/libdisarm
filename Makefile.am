@@ -6,7 +6,7 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libdisarm.pc
 
 
-# libsexp.la
+# libdisarm.la
 LIBDISARMSOURCES = \
 	src/libdisarm/args.c \
 	src/libdisarm/parser.c \

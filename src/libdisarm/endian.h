@@ -22,13 +22,15 @@
 #define _LIBDISARM_ENDIAN_H
 
 
-#if defined(__FreeBSD__) && defined(HAVE_SYS_ENDIAN_H)
-# include <sys/endian.h>
-#else
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-# ifdef HAVE_CONFIG_H
-#  include <config.h>
-# endif
+#if defined HAVE_SYS_ENDIAN_H
+# include <sys/endian.h>
+#elif defined HAVE_ENDIAN_H
+# include <endian.h>
+#else
 
 # include <stdio.h>
 # include <stdlib.h>
