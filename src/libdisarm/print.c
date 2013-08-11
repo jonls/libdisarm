@@ -167,9 +167,9 @@ da_instr_fprint_data_imm(FILE *f, const da_instr_t *instr,
 			 const da_args_data_imm_t *args, da_addr_t addr)
 {
 	fprintf(f, "%s%s%s\t", da_data_op_map[args->op],
-		da_cond_map[args->cond],
 		((args->flags && (args->op < DA_DATA_OP_TST ||
-				  args->op > DA_DATA_OP_CMN)) ? "s" : ""));
+				  args->op > DA_DATA_OP_CMN)) ? "s" : ""),
+		da_cond_map[args->cond]);
 
 	if (args->op >= DA_DATA_OP_TST && args->op <= DA_DATA_OP_CMN) {
 		fprintf(f, "r%d", args->rn);
@@ -195,10 +195,10 @@ da_instr_fprint_data_imm_sh(FILE *f, const da_instr_t *instr,
 			    const da_args_data_imm_sh_t *args, da_addr_t addr)
 {
 	fprintf(f, "%s%s%s\t", da_data_op_map[args->op],
-		da_cond_map[args->cond],
 		((args->flags &&
 		  (args->op < DA_DATA_OP_TST ||
-		   args->op > DA_DATA_OP_CMN)) ? "s" : ""));
+		   args->op > DA_DATA_OP_CMN)) ? "s" : ""),
+		da_cond_map[args->cond]);
 
 	if (args->op >= DA_DATA_OP_TST && args->op <= DA_DATA_OP_CMN) {
 		fprintf(f, "r%d, r%d", args->rn, args->rm);
@@ -226,10 +226,10 @@ da_instr_fprint_data_reg_sh(FILE *f, const da_instr_t *instr,
 			    const da_args_data_reg_sh_t *args, da_addr_t addr)
 {
 	fprintf(f, "%s%s%s\t", da_data_op_map[args->op],
-		da_cond_map[args->cond],
 		((args->flags &&
 		  (args->op < DA_DATA_OP_TST ||
-		   args->op > DA_DATA_OP_CMN)) ? "s" : ""));
+		   args->op > DA_DATA_OP_CMN)) ? "s" : ""),
+		da_cond_map[args->cond]);
 
 	if (args->op >= DA_DATA_OP_TST && args->op <= DA_DATA_OP_CMN) {
 		fprintf(f, "r%d, r%d", args->rn, args->rm);
@@ -286,8 +286,8 @@ static void
 da_instr_fprint_l_sign_imm(FILE *f, const da_instr_t *instr,
 			   const da_args_l_sign_imm_t *args, da_addr_t addr)
 {
-	fprintf(f, "ldr%ss%s\tr%d, [r%d", da_cond_map[args->cond],
-		(args->hword ? "h" : "b"), args->rd, args->rn);
+	fprintf(f, "ldrs%s%s\tr%d, [r%d", (args->hword ? "h" : "b"),
+		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
 
@@ -307,8 +307,8 @@ static void
 da_instr_fprint_l_sign_reg(FILE *f, const da_instr_t *instr,
 			   const da_args_l_sign_reg_t *args, da_addr_t addr)
 {
-	fprintf(f, "ldr%ss%s\tr%d, [r%d", da_cond_map[args->cond],
-		(args->hword ? "h" : "b"), args->rd, args->rn);
+	fprintf(f, "ldrs%s%s\tr%d, [r%d", (args->hword ? "h" : "b"),
+		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
 
@@ -321,7 +321,7 @@ static void
 da_instr_fprint_ls_hw_imm(FILE *f, const da_instr_t *instr,
 			  const da_args_ls_hw_imm_t *args, da_addr_t addr)
 {
-	fprintf(f, "%sr%sh\tr%d, [r%d", (args->load ? "ld" : "st"),
+	fprintf(f, "%srh%s\tr%d, [r%d", (args->load ? "ld" : "st"),
 		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
@@ -342,7 +342,7 @@ static void
 da_instr_fprint_ls_hw_reg(FILE *f, const da_instr_t *instr,
 			  const da_args_ls_hw_reg_t *args, da_addr_t addr)
 {
-	fprintf(f, "%sr%sh\tr%d, [r%d", (args->load ? "ld" : "st"),
+	fprintf(f, "%srh%s\tr%d, [r%d", (args->load ? "ld" : "st"),
 		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
@@ -357,8 +357,8 @@ da_instr_fprint_ls_imm(FILE *f, const da_instr_t *instr,
 		       const da_args_ls_imm_t *args, da_addr_t addr)
 {
 	fprintf(f, "%sr%s%s%s\tr%d, [r%d", (args->load ? "ld" : "st"),
-		da_cond_map[args->cond], (args->byte ? "b" : ""),
-		((!args->p && args->w) ? "t" : ""), args->rd, args->rn);
+		(args->byte ? "b" : ""), ((!args->p && args->w) ? "t" : ""),
+		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
 
@@ -379,8 +379,8 @@ da_instr_fprint_ls_multi(FILE *f, const da_instr_t *instr,
 			 const da_args_ls_multi_t *args, da_addr_t addr)
 {
 	fprintf(f, "%sm%s%s%s\tr%d%s, {", (args->load ? "ld" : "st"),
-		da_cond_map[args->cond], (args->u ? "i" : "d"),
-		(args->p ? "b" : "a"), args->rn, (args->write ? "!" : ""));
+		(args->u ? "i" : "d"), (args->p ? "b" : "a"),
+		da_cond_map[args->cond], args->rn, (args->write ? "!" : ""));
       
 	da_reglist_fprint(f, args->reglist);
 
@@ -392,8 +392,8 @@ da_instr_fprint_ls_reg(FILE *f, const da_instr_t *instr,
 		       const da_args_ls_reg_t *args, da_addr_t addr)
 {
 	fprintf(f, "%sr%s%s%s\tr%d, [r%d", (args->load ? "ld" : "st"),
-		da_cond_map[args->cond], (args->byte ? "b" : ""),
-		((!args->p && args->write) ? "t" : ""), args->rd, args->rn);
+		(args->byte ? "b" : ""), ((!args->p && args->write) ? "t" : ""),
+		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
 
@@ -418,7 +418,7 @@ static void
 da_instr_fprint_ls_two_imm(FILE *f, const da_instr_t *instr,
 			   const da_args_ls_two_imm_t *args, da_addr_t addr)
 {
-	fprintf(f, "%sr%sd\tr%d, [r%d", (args->store ? "st" : "ld"),
+	fprintf(f, "%srd%s\tr%d, [r%d", (args->store ? "st" : "ld"),
 		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
@@ -439,7 +439,7 @@ static void
 da_instr_fprint_ls_two_reg(FILE *f, const da_instr_t *instr,
 			   const da_args_ls_two_reg_t *args, da_addr_t addr)
 {
-	fprintf(f, "%sr%sd\tr%d, [r%d", (args->store ? "st" : "ld"),
+	fprintf(f, "%srd%s\tr%d, [r%d", (args->store ? "st" : "ld"),
 		da_cond_map[args->cond], args->rd, args->rn);
 
 	if (!args->p) fprintf(f, "]");
@@ -484,7 +484,7 @@ da_instr_fprint_mul(FILE *f, const da_instr_t *instr,
 		    const da_args_mul_t *args, da_addr_t addr)
 {
 	fprintf(f, "m%s%s%s\tr%d, r%d, r%d", (args->acc ? "la" : "ul"),
-		da_cond_map[args->cond], (args->flags ? "s" : ""),
+		(args->flags ? "s" : ""), da_cond_map[args->cond],
 		args->rd, args->rm, args->rs);
 
 	if (args->acc) fprintf(f, ", r%d", args->rn);
@@ -496,7 +496,7 @@ da_instr_fprint_mull(FILE *f, const da_instr_t *instr,
 {
 	fprintf(f, "%sm%sl%s%s\tr%d, r%d, r%d, r%d",
 		(args->sign ? "s" : "u"), (args->acc ? "la" : "ul"),
-		da_cond_map[args->cond], (args->flags ? "s" : ""),
+		(args->flags ? "s" : ""), da_cond_map[args->cond],
 		args->rd_lo, args->rd_hi, args->rm, args->rs);
 }
 

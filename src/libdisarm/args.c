@@ -167,7 +167,7 @@ da_instr_parse_args(da_instr_args_t *args, const da_instr_t *instr)
 		args->dsp_mul.op = DA_ARG(instr, 21, 0x3);
 		args->dsp_mul.rd = DA_ARG_REG(instr, 16);
 		args->dsp_mul.rn = DA_ARG_REG(instr, 12);
-		args->dsp_mul.rs = DA_ARG_REG(instr, 12);
+		args->dsp_mul.rs = DA_ARG_REG(instr, 8);
 		args->dsp_mul.y = DA_ARG_BOOL(instr, 6);
 		args->dsp_mul.x = DA_ARG_BOOL(instr, 5);
 		args->dsp_mul.rm = DA_ARG_REG(instr, 0);
@@ -314,7 +314,7 @@ da_instr_parse_args(da_instr_args_t *args, const da_instr_t *instr)
 		args->swp.byte = DA_ARG_BOOL(instr, 22);
 		args->swp.rn = DA_ARG_REG(instr, 16);
 		args->swp.rd = DA_ARG_REG(instr, 12);
-		args->swp.rm = DA_ARG_REG(instr, 10);
+		args->swp.rm = DA_ARG_REG(instr, 0);
 		break;
 	case DA_GROUP_UNDEF_1:
 	case DA_GROUP_UNDEF_2:
